@@ -1,0 +1,11 @@
+@import 'bulma/css/bulma.css';
+
+.btn-close {
+    width: 24px;
+    height: 24px;
+}
+
+.list-group-item {
+    width: 50vw;
+    margin: 0 auto;
+}
