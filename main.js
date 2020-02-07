@@ -7,7 +7,22 @@ const DOM = {
     checkBoxes: document.querySelectorAll('.checkBox')
 }
 
-let todos = [];
+
+let todosList = (function() {
+    let todos = [];
+
+    return {
+        getTodos: function() {
+            return todos;
+        },
+        setTodos: function(obj){
+            todos.push(obj)
+        },
+        replaceTodos: function(obj){
+            todos = obj;
+        }
+    }
+}())
 
 
 const addTodo = () => {
@@ -16,16 +31,18 @@ const addTodo = () => {
 
         const inputVal = DOM.inputTodo.value;
 
+        let todos = todosList.getTodos()
+
         const newTodo = {
             id: todos.length,
             completed: false,
             value: inputVal
         }
     
-        todos.push(newTodo);
+        todosList.setTodos(newTodo);
     }
 
-    let html = printTodos(todos);
+    let html = printTodos(todosList.getTodos);
     
     DOM.listTodo.insertAdjacentHTML('afterbegin', html);
     DOM.inputTodo.value = '';
@@ -37,7 +54,7 @@ const printTodos = (todos) => {
 
     DOM.listTodo.innerHTML = '';
     
-     let html = todos.map(todo => {
+     let html = todosList.getTodos().map(todo => {
         return `<li class="list-group-item" data-completed="${todo.completed}" id="${todo.id}"><input type="checkbox" class="checkBox">${todo.value}${closeIcon}</li>`;
     })
     return html.join(' ');
@@ -46,13 +63,14 @@ const printTodos = (todos) => {
 const removeTodo = (event) => {
 
     if(event.target.classList.contains('close-btn')){
-        let newTodos = todos.filter(el => {
+        let newTodos = todosList.getTodos().filter(el => {
             return el.id !== parseInt(event.target.parentNode.id)
         })
-    
+        console.log(newTodos)
+        todosList.replaceTodos(newTodos);
         let html = printTodos(newTodos);
         DOM.listTodo.insertAdjacentHTML('afterbegin', html);
-        todos = newTodos;
+        
     } 
 }
 
