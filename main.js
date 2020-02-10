@@ -13,13 +13,16 @@ let todosList = (function() {
 
     return {
         getTodos: function() {
+            todos = JSON.parse(window.localStorage.getItem('todos') || '[]');
             return todos;
         },
         setTodos: function(obj){
             todos.push(obj)
+            window.localStorage.setItem('todos', JSON.stringify(todos));
         },
         replaceTodos: function(obj){
             todos = obj;
+            window.localStorage.setItem('todos', JSON.stringify(todos));
         }
     }
 }())
@@ -66,7 +69,7 @@ const removeTodo = (event) => {
         let newTodos = todosList.getTodos().filter(el => {
             return el.id !== parseInt(event.target.parentNode.id)
         })
-        console.log(newTodos)
+        
         todosList.replaceTodos(newTodos);
         let html = printTodos(newTodos);
         DOM.listTodo.insertAdjacentHTML('afterbegin', html);
@@ -84,6 +87,11 @@ const init = () => {
     DOM.btnDo.addEventListener('click', addTodo);
     DOM.listTodo.addEventListener('click', removeTodo);
     DOM.listTodo.addEventListener('change', crossOut);
+    
+    let html = printTodos(todosList.getTodos);
+    
+    DOM.listTodo.insertAdjacentHTML('afterbegin', html);
+    DOM.inputTodo.value = '';
 }
 
 init();
