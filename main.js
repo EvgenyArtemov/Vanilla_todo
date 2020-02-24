@@ -85,6 +85,11 @@ const crossOut = (event) => {
 
 const init = () => {
     DOM.btnDo.addEventListener('click', addTodo);
+    DOM.inputTodo.addEventListener('keypress', event => {
+        if(event.key === 'Enter'){
+            addTodo();
+        }
+    });
     DOM.listTodo.addEventListener('click', removeTodo);
     DOM.listTodo.addEventListener('change', crossOut);
     
@@ -92,6 +97,7 @@ const init = () => {
     
     DOM.listTodo.insertAdjacentHTML('afterbegin', html);
     DOM.inputTodo.value = '';
+    DOM.inputTodo.focus();
 }
 
 init();

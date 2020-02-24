@@ -1,15 +1,25 @@
-@import 'bulma/css/bulma.css';
 
-.btn-close {
+/* .btn-close {
     width: 24px;
     height: 24px;
-}
+} */
 
 .list-group-item {
+    position: relative;
     width: 50vw;
     margin: 0 auto;
 }
 
 .lineThrough {
     text-decoration: line-through;
+}
+
+.close-btn {
+    position: absolute;
+    right: 3rem;
+    bottom: 15px;
+}
+
+.checkBox {
+    margin-right: 1rem;
 }
